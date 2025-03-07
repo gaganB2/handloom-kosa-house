@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Elegant Red Silk Saree",
+        "desc": "Beautifully crafted silk saree in deep red with golden embroidery.",
+        "img": "saree1.jpg"
+    },
+    {
+        "title": "Classic Green Banarasi Saree",
+        "desc": "A timeless green Banarasi saree with intricate zari work.",
+        "img": "saree2.jpg"
+    },
+    {
+        "title": "Royal Blue Cotton Saree",
+        "desc": "Lightweight and comfortable blue cotton saree for casual wear.",
+        "img": "saree3.jpg"
+    }
+]

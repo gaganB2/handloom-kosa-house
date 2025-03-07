@@ -1,94 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Saree Collection</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f8f8f8;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-        .product {
-            display: inline-block;
-            margin: 10px;
-            cursor: pointer;
-        }
-        .product img {
-            width: 150px;
-            height: 200px;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-        .product img:hover {
-            transform: scale(1.1);
-        }
-        #details {
-            display: none;
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
-        }
-        #details img {
-            width: 250px;
-            height: auto;
-            border-radius: 8px;
-        }
-        .close-btn {
-            color: red;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f8f8f8;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .product {
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+      }
+      .product img {
+        width: 150px;
+        height: 200px;
+        border-radius: 8px;
+        transition: transform 0.3s;
+      }
+      .product img:hover {
+        transform: scale(1.1);
+      }
+      #details {
+        display: none;
+        background-color: white;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px gray;
+      }
+      #details img {
+        width: 250px;
+        height: auto;
+        border-radius: 8px;
+      }
+      .close-btn {
+        color: red;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <h2>Elegant Saree Collection</h2>
 
-    <div class="container">
-        <div class="product" onclick="showDetails('Saree 1', 'Elegant Red Silk Saree', 'saree1.jpg')">
-            <img src="saree1.jpg" alt="Saree 1">
-            <p>Red Silk Saree</p>
-        </div>
-
-        <div class="product" onclick="showDetails('Saree 2', 'Beautiful Blue Cotton Saree', 'saree2.jpg')">
-            <img src="saree2.jpg" alt="Saree 2">
-            <p>Blue Cotton Saree</p>
-        </div>
-
-        <div class="product" onclick="showDetails('Saree 3', 'Classic Green Banarasi Saree', 'saree3.jpg')">
-            <img src="saree3.jpg" alt="Saree 3">
-            <p>Green Banarasi Saree</p>
-        </div>
-    </div>
+    <div class="container" id="product-container"></div>
 
     <div id="details">
-        <span class="close-btn" onclick="hideDetails()">✖ Close</span>
-        <h3 id="saree-title"></h3>
-        <img id="saree-img" src="" alt="">
-        <p id="saree-desc"></p>
+      <span class="close-btn" onclick="hideDetails()">✖ Close</span>
+      <h3 id="saree-title"></h3>
+      <img id="saree-img" src="" alt="" />
+      <p id="saree-desc"></p>
     </div>
 
     <script>
-        function showDetails(title, desc, imgSrc) {
-            document.getElementById("saree-title").innerText = title;
-            document.getElementById("saree-desc").innerText = desc;
-            document.getElementById("saree-img").src = imgSrc;
-            document.getElementById("details").style.display = "block";
-        }
+      async function loadProducts() {
+        const response = await fetch("products.json");
+        const products = await response.json();
 
-        function hideDetails() {
-            document.getElementById("details").style.display = "none";
-        }
+        const container = document.getElementById("product-container");
+        container.innerHTML = "";
+
+        products.forEach((product) => {
+          const div = document.createElement("div");
+          div.classList.add("product");
+          div.innerHTML = `
+                    <img src="${product.img}" alt="${product.title}">
+                    <p>${product.title}</p>
+                `;
+          div.onclick = () =>
+            showDetails(product.title, product.desc, product.img);
+          container.appendChild(div);
+        });
+      }
+
+      function showDetails(title, desc, imgSrc) {
+        document.getElementById("saree-title").innerText = title;
+        document.getElementById("saree-desc").innerText = desc;
+        document.getElementById("saree-img").src = imgSrc;
+        document.getElementById("details").style.display = "block";
+      }
+
+      function hideDetails() {
+        document.getElementById("details").style.display = "none";
+      }
+
+      loadProducts();
     </script>
-
-</body>
+  </body>
 </html>
