@@ -1,102 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Saree Collection</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handloom Kosa House | Coming Soon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background-color: #f8f8f8;
-      }
-      .container {
-        max-width: 800px;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .product {
-        margin: 10px;
-        cursor: pointer;
-        text-align: center;
-      }
-      .product img {
-        width: 150px;
-        height: 200px;
-        border-radius: 8px;
-        transition: transform 0.3s;
-      }
-      .product img:hover {
-        transform: scale(1.1);
-      }
-      #details {
-        display: none;
-        background-color: white;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px gray;
-      }
-      #details img {
-        width: 250px;
-        height: auto;
-        border-radius: 8px;
-      }
-      .close-btn {
-        color: red;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-      }
+        :root {
+            --primary: #f3e9d6; /* Silk cream */
+            --secondary: #d4af8a; /* Gold silk */
+            --accent-1: #a26769; /* Rose silk */
+            --accent-2: #6d4a4e; /* Deep rose */
+            --light: #fff9f0;
+            --dark: #3a2e2c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+            overflow: hidden;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 800px;
+            background: rgba(255, 249, 240, 0.0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(58, 46, 44, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(210, 180, 140, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--accent-2);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(58, 46, 44, 0.1);
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 25%;
+            border-radius: 10px;
+            animation: progress 3s ease-in-out infinite;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-1));
+            background-size: 200% 100%;
+        }
+        
+        @keyframes progress {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .social-link:nth-child(1):hover { background: #E4405F; color: white; } /* Instagram */
+        .social-link:nth-child(2):hover { background: #1877F2; color: white; } /* Facebook */
+        .social-link:nth-child(3):hover { background: #25D366; color: white; } /* WhatsApp */
+        .social-link:nth-child(4):hover { background: #D44638; color: white; } /* Email */
+        
+        #threejs-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .silk-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 Q25,25 50,50 T100,50" fill="none" stroke="%23d4af8a" stroke-width="0.5" opacity="0.3"/></svg>');
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+                backdrop-filter: blur(2px);
+            }
+            
+            .social-link {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <h2>Elegant Saree Collection</h2>
-
-    <div class="container" id="product-container"></div>
-
-    <div id="details">
-      <span class="close-btn" onclick="hideDetails()">✖ Close</span>
-      <h3 id="saree-title"></h3>
-      <img id="saree-img" src="" alt="" />
-      <p id="saree-desc"></p>
+</head>
+<body>
+    <div class="silk-pattern"></div>
+    <div id="threejs-container"></div>
+    
+    <div class="container">
+        <div class="logo">🌸</div>
+        <h1>Kosa Silk Sarees</h1>
+        <p>We're weaving something exquisite for you. Our new collection of premium Kosa silk sarees will be unveiled soon.</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <p>Follow us for updates on our upcoming collection launch.</p>
+        
+        <div class="social-links">
+            <a href="https://www.instagram.com/handloom_kosa_house/" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100065178983974" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
     </div>
-
+    
     <script>
-      async function loadProducts() {
-        const response = await fetch("products.json");
-        const products = await response.json();
-
-        const container = document.getElementById("product-container");
-        container.innerHTML = "";
-
-        products.forEach((product) => {
-          const div = document.createElement("div");
-          div.classList.add("product");
-          div.innerHTML = `
-                    <img src="${product.img}" alt="${product.title}">
-                    <p>${product.title}</p>
-                `;
-          div.onclick = () =>
-            showDetails(product.title, product.desc, product.img);
-          container.appendChild(div);
+        // Enhanced Three.js scene for Kosa Silk with colorful cocoons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load Three.js if not already loaded
+            if (typeof THREE === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                script.onload = function() {
+                    loadOrbitControls();
+                };
+                document.head.appendChild(script);
+            } else {
+                loadOrbitControls();
+            }
+            
+            function loadOrbitControls() {
+                if (typeof THREE.OrbitControls === 'undefined') {
+                    const orbitScript = document.createElement('script');
+                    orbitScript.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js';
+                    orbitScript.onload = initSilkScene;
+                    document.head.appendChild(orbitScript);
+                } else {
+                    initSilkScene();
+                }
+            }
         });
-      }
-
-      function showDetails(title, desc, imgSrc) {
-        document.getElementById("saree-title").innerText = title;
-        document.getElementById("saree-desc").innerText = desc;
-        document.getElementById("saree-img").src = imgSrc;
-        document.getElementById("details").style.display = "block";
-      }
-
-      function hideDetails() {
-        document.getElementById("details").style.display = "none";
-      }
-
-      loadProducts();
+        
+        function initSilkScene() {
+            // Scene setup
+            const container = document.getElementById('threejs-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            scene.background = null;
+            
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 15);
+            
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true 
+            });
+            renderer.setPixelRatio(window.devicePixelRatio || 1);
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Enhanced controls for better interaction
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = true;
+            controls.enablePan = false;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.3;
+            controls.maxPolarAngle = Math.PI * 0.6;
+            controls.minPolarAngle = Math.PI * 0.3;
+            controls.maxDistance = 25;
+            controls.minDistance = 8;
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xf3e9d6, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            const pointLight = new THREE.PointLight(0xd4af8a, 0.7, 30);
+            pointLight.position.set(3, 3, 3);
+            scene.add(pointLight);
+            
+            // Create silk fabric draped effect
+            const silkGeometry = createSilkGeometry();
+            const silkMaterial = new THREE.MeshPhongMaterial({
+                color: 0xf3e9d6,
+                specular: 0x111111,
+                shininess: 30,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.85,
+                wireframe: false
+            });
+            
+            const silk = new THREE.Mesh(silkGeometry, silkMaterial);
+            silk.position.y = -1;
+            silk.rotation.x = -Math.PI / 2;
+            scene.add(silk);
+            
+            // Create colorful cocoons
+            const cocoonColors = [
+                0xf0f0f0, // White
+                0xe6c229, // Mulberry yellow
+                0x8f9779, // Green
+                0xd4af8a, // Original gold
+                0xa26769  // Rose
+            ];
+            
+            const cocoons = [];
+            const cocoonPositions = [
+                { x: 4, y: -2, z: 0 },
+                { x: -4, y: -1, z: 2 },
+                { x: 0, y: 1, z: 3 },
+                { x: 3, y: 0, z: -3 },
+                { x: -3, y: 1, z: -2 }
+            ];
+            
+            cocoonPositions.forEach((pos, i) => {
+                const cocoonGeometry = new THREE.SphereGeometry(1.2, 32, 32);
+                cocoonGeometry.scale(1, 1.5, 1);
+                
+                const cocoonMaterial = new THREE.MeshPhongMaterial({
+                    color: cocoonColors[i % cocoonColors.length],
+                    specular: 0x111111,
+                    shininess: 15,
+                    transparent: true,
+                    opacity: 0.85,
+                    wireframe: false
+                });
+                
+                const cocoon = new THREE.Mesh(cocoonGeometry, cocoonMaterial);
+                cocoon.position.set(pos.x, pos.y, pos.z);
+                cocoon.userData.originalY = pos.y;
+                cocoon.userData.speed = 0.5 + Math.random() * 0.5;
+                scene.add(cocoon);
+                cocoons.push(cocoon);
+            });
+            
+            // Handle resize
+            window.addEventListener('resize', function() {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Gentle movement for silk
+                const time = Date.now() * 0.001;
+                silk.rotation.z = Math.sin(time * 0.3) * 0.1;
+                silk.position.y = -1 + Math.sin(time * 0.5) * 0.2;
+                
+                // Floating animation for cocoons
+                cocoons.forEach(cocoon => {
+                    cocoon.rotation.y += 0.005 * cocoon.userData.speed;
+                    cocoon.position.y = cocoon.userData.originalY + Math.sin(time * cocoon.userData.speed) * 0.5;
+                });
+                
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        }
+        
+        function createSilkGeometry() {
+            // Create a draped silk cloth geometry
+            const geometry = new THREE.PlaneGeometry(12, 12, 24, 24);
+            
+            // Manipulate vertices to create draped effect
+            const position = geometry.attributes.position;
+            const vertex = new THREE.Vector3();
+            
+            for (let i = 0; i < position.count; i++) {
+                vertex.fromBufferAttribute(position, i);
+                
+                // Create wave-like pattern
+                vertex.z = Math.sin(vertex.x * 0.4) * Math.cos(vertex.y * 0.25) * 1.8;
+                
+                // Add some randomness for natural look
+                vertex.z += (Math.random() - 0.5) * 0.2;
+                
+                position.setXYZ(i, vertex.x, vertex.y, vertex.z);
+            }
+            
+            geometry.computeVertexNormals();
+            return geometry;
+        }
     </script>
-  </body>
+</body>
 </html>
